@@ -35,6 +35,28 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         cell.textLabel?.textColor=UIColor.redColor()
         return cell
     }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedRow = tableView.cellForRowAtIndexPath(indexPath)!
+        
+        if selectedRow.accessoryType == UITableViewCellAccessoryType.None {
+            selectedRow.accessoryType = UITableViewCellAccessoryType.Checkmark
+            selectedRow.tintColor = UIColor.blueColor()
+        }else{
+            selectedRow.accessoryType = UITableViewCellAccessoryType.None
+        }//end of if else statement
+    }//end of didselectfunction
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let deletedRow = tableView.cellForRowAtIndexPath(indexPath)!
+        
+        if editingStyle == UITableViewCellEditingStyle.Delete{
+            items.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            deletedRow.accessoryType=UITableViewCellAccessoryType.None
+        }
+    }
 
     @IBAction func addButton(sender: UIButton) {
         let newItem = textField.text
